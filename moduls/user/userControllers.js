@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 async function register(req, res){
     try {
         // Get user input
-        const { first_name, last_name, email, password } = req.body;
+        const { first_name, last_name, email, password } = await req.body;
 
         // Validate user input
         if (!(email)) {
@@ -74,7 +74,6 @@ async function register(req, res){
         // );
         
 
-        // bigfish
         let data = {
           time: Date(),
           userId: user.id,
@@ -95,7 +94,7 @@ async function login(req, res){
     const {email, password} = req.body;
 
     if (!(email)){
-        res.status(422).json({
+        return res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "ایمیل الزامی است"
@@ -103,7 +102,7 @@ async function login(req, res){
     }
 
     if (!(password)){
-        res.status(422).json({
+        return res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "رمز الزامی است"
@@ -112,16 +111,16 @@ async function login(req, res){
 
     const user = await User.findOne({email: email});
 
-    if (user, await bcrypt.compare(password, user.password)){
+    if (user && await bcrypt.compare(password, user.password)){
         let data = {
             time: Date(),
             userId: user.id,
         }
-      
+
           const token = await jwt.sign(data, process.env.JWT_SECRET_KEY, {expiresIn: "2h"});
           user.token = token;
 
-          await res.status(200).json({
+          return await res.status(200).json({
             message: "با موفقیت وارد شدید",
             status: 200,
             success: true,
@@ -133,7 +132,7 @@ async function login(req, res){
     }
 
     else{
-        res.status(404).json({
+        return res.status(404).json({
             message: "کاربر یافت نشد",
             status: 404,
             success: false
