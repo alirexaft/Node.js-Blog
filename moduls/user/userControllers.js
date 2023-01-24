@@ -10,7 +10,7 @@ async function register(req, res){
 
         // Validate user input
         if (!(email)) {
-          res.status(422).send({
+          return res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "ایمیل الزامی است"
@@ -18,7 +18,7 @@ async function register(req, res){
         }
 
         if (!(password)) {
-          res.status(422).send({
+          return res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "رمز الزامی است"
@@ -26,7 +26,7 @@ async function register(req, res){
         }
 
         if (!(first_name)) {
-          res.status(422).send({
+          return res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "نام الزامی است"
@@ -34,7 +34,7 @@ async function register(req, res){
         }
 
         if (!(last_name)) {
-          res.status(422).send({
+          return res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "نام خانوادگی الزامی است"
@@ -46,7 +46,7 @@ async function register(req, res){
         const oldUser = await User.findOne({ email });
     
         if (oldUser) {
-          return res.status(409).send({
+          return res.status(409).json({
             "message": "لطفا نام کاربری دیگری انتخاب کنید",
             "status": 409,
             "success": false
@@ -85,7 +85,7 @@ async function register(req, res){
         user.token = token;
         
         // return new user
-        res.status(201).json(user);
+        return await res.status(201).json(user);
       } catch (err) {
         console.log(err);
       }
@@ -95,7 +95,7 @@ async function login(req, res){
     const {email, password} = req.body;
 
     if (!(email)){
-        res.status(422).send({
+        res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "ایمیل الزامی است"
@@ -103,7 +103,7 @@ async function login(req, res){
     }
 
     if (!(password)){
-        res.status(422).send({
+        res.status(422).json({
             "message": "داده های ورودی معتبر نیست",
             "status": 422,
             "errors": "رمز الزامی است"
