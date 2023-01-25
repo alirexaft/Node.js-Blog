@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 
 const userSchema = new mongoose.Schema({
   first_name: { type: String, default: null },
@@ -12,4 +14,8 @@ const userSchema = new mongoose.Schema({
   deletedDate: {type: Date},
 
 });
-module.exports = mongoose.model("user", userSchema);
+userSchema.plugin(mongoosePaginate);
+const User = mongoose.model("user", userSchema);
+User.paginate().then({});
+
+module.exports = User;

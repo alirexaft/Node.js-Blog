@@ -80,9 +80,9 @@ async function register(req, res){
       }
 
         const token = await jwt.sign(data, process.env.JWT_SECRET_KEY);
-    
+
         user.token = token;
-        
+
         // return new user
         return await res.status(201).json(user);
       } catch (err) {

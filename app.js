@@ -7,6 +7,7 @@ require("dotenv").config();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postRouter = require('./routes/posts');
+var adminRouter = require("./routes/admins");
 const { default: mongoose } = require('mongoose');
 
 mongoose.set("strictQuery", false);
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/posts', postRouter);
+app.use('/api/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

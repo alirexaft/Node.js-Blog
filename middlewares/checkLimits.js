@@ -5,7 +5,7 @@ async function checkLimitForComment(req, res, next){
             "message": "اجازه گذاشتن کامنت را ندارید",
             "status": 403,
             "success": false
-        })
+        });
     }
     return await next();
 }

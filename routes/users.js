@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const User = require("../moduls/user/model");
 const {checkLimitForComment, checkLimitForPost} = require("../middlewares/checkLimits");
 const {verifyToken} = require("../middlewares/verifyToken");
 const {register, login} = require("../moduls/user/userControllers")
